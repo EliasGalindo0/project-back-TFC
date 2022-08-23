@@ -14,7 +14,7 @@ const schema = Joi.object({
 
 const loginService = {
   async login(email: string, password: string) {
-    if (!email || !password) throw new ValidateError(401, 'Incorrect email or password');
+    // if (!email || !password) throw new ValidateError(401, 'Incorrect email or password');
 
     const { error } = schema.validate({ email, password });
     if (error) throw new ValidateError(400, error.message);
