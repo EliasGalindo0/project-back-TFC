@@ -1,6 +1,4 @@
 import { Request, Response } from 'express';
-import { auth } from '../services/authenticationService';
-// import { auth } from '../services/authenticationService';
 import loginService from '../services/loginService';
 
 const loginController = {
@@ -19,10 +17,10 @@ const loginController = {
     }
   },
 
-  async authentication(req: Request, res: Response) {
+  async userRole(req: Request, res: Response) {
     try {
       const token = req.headers.authorization;
-      const { role } = await auth(token as string);
+      const role = await loginService.userRole(token as string);
       res.status(200).json({ role });
     } catch (error: any) {
       return error.status

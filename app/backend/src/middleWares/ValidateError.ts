@@ -1,18 +1,13 @@
 export default class ValidateError extends Error {
-  public _status: number;
-  public _message: string;
+  private _status: number;
 
   constructor(status: number, message: string) {
-    super();
+    super(message);
     this._status = status;
-    this._message = message;
+    this.message = message;
   }
 
   get status() {
     return this._status;
-  }
-
-  get message() {
-    return this._message;
   }
 }

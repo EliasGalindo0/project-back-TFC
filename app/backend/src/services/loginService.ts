@@ -2,7 +2,7 @@ import Joi = require('joi');
 import * as bcrypt from 'bcryptjs';
 import usersModel from '../database/models/users';
 import ValidateError from '../middleWares/ValidateError';
-import { getToken } from './authenticationService';
+import { auth, setToken } from './authenticationService';
 
 const schema = Joi.object({
   email: Joi.string().required().email(),
@@ -14,25 +14,32 @@ const schema = Joi.object({
 
 const loginService = {
   async login(email: string, password: string) {
-    // if (!email || !password) throw new ValidateError(401, 'Incorrect email or password');
-
     const { error } = schema.validate({ email, password });
     if (error) throw new ValidateError(400, error.message);
 
-    const user = await usersModel.findOne({
+    const dataValues = await usersModel.findOne({
       where: { email },
     });
-    console.log(user);
+    console.log(dataValues);
 
-    if (!user) throw new ValidateError(401, 'Incorrect email or password');
+    if (!dataValues) throw new ValidateError(401, 'Incorrect email or password');
 
-    const verified = await bcrypt.compare(password, user.password);
+    const { id, username, role } = dataValues;
+
+    const verified = await bcrypt.compare(password, dataValues.password);
 
     if (!verified) throw new ValidateError(401, 'Incorrect email or password');
 
-    const token = getToken(password);
+    const token = setToken({ id, username, role, email });
 
     return { token };
+  },
+
+  async userRole(token: string): Promise<string> {
+    const tokenVerify = auth(token);
+    console.log(tokenVerify);
+
+    return tokenVerify.data.role;
   },
 };
 
