@@ -36,9 +36,8 @@ const loginService = {
   },
 
   async userRole(token: string): Promise<string> {
+    if (!token) throw new ValidateError(401, 'Token not found');
     const tokenVerify = auth(token);
-    console.log(tokenVerify);
-
     return tokenVerify.data.role;
   },
 };
