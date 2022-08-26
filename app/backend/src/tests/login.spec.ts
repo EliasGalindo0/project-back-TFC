@@ -3,26 +3,25 @@ import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 import { app } from '../app';
+import { IUser } from '../interfaces';
 import Users from '../database/models/users';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
 
-const userMock: Array<object>= [{
+const userMock: IUser= {
   id: 1,
-  username: "Admin",
+  username: "admin",
   role: "admin",
   email: "admin@email.com",
   password: "secret_admin"
-},
-{
-  id: 2,
-  username: "User",
-  role: "user",
-  email: "user@email.com",
-  password: "secret_user"
-}]
+}
+
+const bodyMock: IUser= {
+  email: "admin@email.com",
+  password: "secret_admin"
+}
 
 describe('Login', () => {
   
@@ -30,19 +29,14 @@ describe('Login', () => {
     sinon.restore();
   });
   
-  it('should return status 200 and token', async () => {
+  it('should return status 200', async () => {
     sinon.stub(Users, "findOne")
-    .resolves(userMock[0] as Users)
+    .resolves(userMock as Users)
 
-      const chaiHttpResponse = await chai
-        .request(app)
+      const chaiHttpResponse = await chai.request(app)
         .post('/login')
-        .send({
-          email: "admin@email.com",
-          password: "secret_admin"
-        })
+        .send(bodyMock)
       
       expect(chaiHttpResponse.status).to.equal(200);
-      // expect(chaiHttpResponse.body).to.have.property('token');
     })
   })

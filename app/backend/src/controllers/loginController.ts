@@ -5,7 +5,6 @@ const loginController = {
   async login(req: Request, res: Response): Promise<Response | unknown> {
     try {
       const { email, password } = req.body;
-      console.log(req.body);
 
       const response = await loginService.login(email, password);
 

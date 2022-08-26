@@ -20,7 +20,6 @@ const loginService = {
     const dataValues = await usersModel.findOne({
       where: { email },
     });
-    console.log(dataValues);
 
     if (!dataValues) throw new ValidateError(401, 'Incorrect email or password');
 

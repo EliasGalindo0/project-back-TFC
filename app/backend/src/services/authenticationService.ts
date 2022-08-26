@@ -12,4 +12,4 @@ export const auth = (token: string) => {
 
 export const verifyToken = (password: string) => jwt.verify(password, secret);
 
-export const setToken = (user: jwt.JwtPayload) => jwt.sign({ data: user }, secret);
+export const setToken = (payload: jwt.JwtPayload) => jwt.sign({ data: payload }, secret);
