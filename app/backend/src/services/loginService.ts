@@ -1,5 +1,6 @@
 import Joi = require('joi');
 import * as bcrypt from 'bcryptjs';
+import { IUser } from '../interfaces/index';
 import usersModel from '../database/models/users';
 import ValidateError from '../middleWares/ValidateError';
 import { auth, setToken } from './authenticationService';
@@ -13,9 +14,11 @@ const schema = Joi.object({
 });
 
 const loginService = {
-  async login(email: string, password: string) {
-    const { error } = schema.validate({ email, password });
+  async login(body: IUser) {
+    const { error } = schema.validate(body);
     if (error) throw new ValidateError(400, error.message);
+
+    const { email, password } = body;
 
     const dataValues = await usersModel.findOne({
       where: { email },
