@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as cors from 'cors';
 import loginRouter from './routes/loginRouter';
+import teamRouter from './routes/teamRouter';
 
 class App {
   public app: express.Express;
@@ -13,6 +14,7 @@ class App {
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
     this.app.use('/login', loginRouter);
+    this.app.use('/teams', teamRouter);
     this.app.use(cors());
   }
 

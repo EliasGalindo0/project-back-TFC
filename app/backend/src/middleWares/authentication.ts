@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import * as jwt from 'jsonwebtoken';
-import ValidateError from '../middleWares/ValidateError';
+import ValidateError from './ValidateError';
 
 const secret = process.env.JWT_SECRET || '123456';
 

@@ -3,7 +3,7 @@ import * as bcrypt from 'bcryptjs';
 import { IUser } from '../interfaces/index';
 import usersModel from '../database/models/users';
 import ValidateError from '../middleWares/ValidateError';
-import { auth, setToken } from './authenticationService';
+import { auth, setToken } from '../middleWares/authentication';
 
 const schema = Joi.object({
   email: Joi.string().required().email(),

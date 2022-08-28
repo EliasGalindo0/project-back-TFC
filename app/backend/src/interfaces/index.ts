@@ -12,3 +12,8 @@ export interface IMatch {
   homeTeamGoals: number,
   awayTeamGoals: number
 }
+
+export interface ITeam {
+  id: number,
+  teamName: string
+}
