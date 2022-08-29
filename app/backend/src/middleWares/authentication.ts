@@ -7,6 +7,7 @@ const secret = process.env.JWT_SECRET || '123456';
 export const auth = (token: string) => {
   if (!token) throw new ValidateError(401, 'Token not found');
   const data = jwt.verify(token, secret) as jwt.JwtPayload;
+  if (!data) throw new ValidateError(401, 'Token must be a valid token');
   return data;
 };
 
