@@ -6,6 +6,7 @@ import { app } from '../app';
 import { IUser } from '../interfaces';
 import Users from '../database/models/users';
 import loginService from '../services/loginService';
+import ValidationError from '../middleWares/ValidateError';
 
 chai.use(chaiHttp);
 
@@ -53,6 +54,28 @@ describe('Login', () => {
         .send(bodyMock)
       
       expect(chaiHttpResponse.body.token).to.equal(token);
+    })
+  it('should return status 401', async () => {
+    sinon.stub(loginService, 'login').callsFake(() => {
+      throw new ValidationError(401, 'All fields must be filled')
+  })
+
+      const chaiHttpResponse = await chai.request(app)
+        .post('/login')
+        .send(bodyMock)
+      
+      expect(chaiHttpResponse.status).to.equal(401);
+    })
+  it('should return status 400 case password or email incorrect', async () => {
+    sinon.stub(loginService, 'login').callsFake(() => {
+      throw new ValidationError(400, 'Incorrect email or password')
+  })
+
+      const chaiHttpResponse = await chai.request(app)
+        .post('/login')
+        .send(bodyMock)
+      
+      expect(chaiHttpResponse.status).to.equal(400);
     })
   // it('should return user role', async () => {
   //   sinon.stub(loginService, "userRole")

@@ -17,7 +17,21 @@ describe('LeaderBoard', () => {
   it('should return status 200', async () => {
 
       const chaiHttpResponse = await chai.request(app)
-        .post('/leaderboard/home');
+        .get('/leaderboard/home');
+      
+      expect(chaiHttpResponse.status).to.equal(200);
+    })
+  it('should return status 200', async () => {
+
+      const chaiHttpResponse = await chai.request(app)
+        .get('/leaderboard/away');
+      
+      expect(chaiHttpResponse.status).to.equal(200);
+    })
+  it('should return status 200', async () => {
+
+      const chaiHttpResponse = await chai.request(app)
+        .get('/leaderboard');
       
       expect(chaiHttpResponse.status).to.equal(200);
     })

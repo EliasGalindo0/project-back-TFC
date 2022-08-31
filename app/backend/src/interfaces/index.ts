@@ -20,7 +20,7 @@ export interface ITeam {
   teamName: string
 }
 
-export type IBoard = {
+export interface IBoard {
   name: string,
   totalPoints: number,
   totalGames: number,
@@ -31,4 +31,4 @@ export type IBoard = {
   goalsOwn: number,
   goalsBalance: number,
   efficiency: number
-};
+}

@@ -17,7 +17,7 @@ describe('Teams', () => {
   it('should return status 200', async () => {
 
       const chaiHttpResponse = await chai.request(app)
-        .post('/teams');
+        .get('/teams');
       
       expect(chaiHttpResponse.status).to.equal(200);
     })
@@ -25,7 +25,7 @@ describe('Teams', () => {
   it('should return status 200 when get a Team By Id', async () => {
 
       const chaiHttpResponse = await chai.request(app)
-        .post('/teams/1');
+        .get('/teams/1');
       
       expect(chaiHttpResponse.status).to.equal(200);
     })
