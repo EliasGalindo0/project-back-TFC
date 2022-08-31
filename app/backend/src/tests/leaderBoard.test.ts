@@ -8,14 +8,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-const matchMock = {
-  "homeTeam": 16, 
-  "awayTeam": 8, 
-  "homeTeamGoals": 2,
-  "awayTeamGoals": 2
-}
-
-describe('Matches', () => {
+describe('LeaderBoard', () => {
   
   beforeEach(async () => {
     sinon.restore();
@@ -24,8 +17,7 @@ describe('Matches', () => {
   it('should return status 200', async () => {
 
       const chaiHttpResponse = await chai.request(app)
-        .post('/matches')
-        .send(matchMock);
+        .post('/leaderboard/home');
       
       expect(chaiHttpResponse.status).to.equal(200);
     })

@@ -1,5 +1,6 @@
+import { queryAwayTeam, queryHomeTeam } from '../utils/sql';
 import sequelize from '../database/models';
-import query from '../utils/sql';
+
 import { IBoard } from '../interfaces/index';
 
 // A sua tabela deverá renderizar somente as PARTIDAS que já foram FINALIZADAS! Os seguintes pontos serão avaliados:
@@ -10,7 +11,12 @@ import { IBoard } from '../interfaces/index';
 
 export default class leaderBoardService {
   static async get(): Promise<IBoard[] | unknown> {
-    const [response] = await sequelize.query(query);
+    const [response] = await sequelize.query(queryHomeTeam);
+    return response;
+  }
+
+  static async getAway(): Promise<IBoard[] | unknown> {
+    const [response] = await sequelize.query(queryAwayTeam);
     return response;
   }
 }
